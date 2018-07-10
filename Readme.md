@@ -7,3 +7,6 @@ The Direct Show filter creates the library **Cam.dll** that must be registered u
 Once registered the filter is always accessible as a web camera device, the bitmap is updated when the application b_frame_grabber under the project (Folder) DSCam.
 
 
+at this point image in the team viewer display appears to be mirrored
+path to the file is curently in the desktop, must be changed
+camera is not detected with WebRTC test
