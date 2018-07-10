@@ -90,7 +90,7 @@ public:
 };
 ///////////////////////////////////////////////////
 
-//class CVCamStream;
+class CVCamStream;
 class CVCam : public CSource
 {
 public:
@@ -108,6 +108,17 @@ private:
 
 class CVCamStream : public CSourceStream, public IAMStreamConfig, public IKsPropertySet
 {
+
+protected:
+	HANDLE m_hFile;
+	BYTE * m_pFile;
+	BYTE * m_pImage;
+	int m_iFrameNumber;
+	const REFERENCE_TIME m_rtFrameLength;
+	DWORD m_cbBitmapInfo;
+	BITMAPINFO *m_pBmi;
+	BOOL m_bZeroMemory;
+	int m_FramesWritten;
 public:
 
 	//////////////////////////////////////////////////////////////////////////
@@ -142,6 +153,8 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	CVCamStream(HRESULT *phr, CVCam *pParent, LPCWSTR pPinName);
 	~CVCamStream();
+	//NATI WAS HERE
+	void UpDateHBitmap();
 
 	HRESULT FillBuffer(IMediaSample *pms);
 	HRESULT DecideBufferSize(IMemAllocator *pIMemAlloc, ALLOCATOR_PROPERTIES *pProperties);
