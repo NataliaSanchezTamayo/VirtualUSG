@@ -11,7 +11,7 @@ at this point image in the team viewer display appears to be mirrored
 path to the file is curently in the desktop, must be changed
 camera is not detected with WebRTC test
 
-this is the master branch
+#this is the master branch
 This code contains two filters vcam and bitmapsender
 However, Only the filter bitmap sender is being registered and unregistered!!
 the filter works correctly with splitcam and directshow applications but is not detected as hardware in the computer. So it requires the use of splitcam driver for the web browser to find it as a camera. driver is not setup correctly for team viewer.
@@ -19,3 +19,6 @@ the filter works correctly with splitcam and directshow applications but is not 
 ##Register
 -When using this filter bitmapsender with splitcam you must make sure that the .dll located in the folder: \Cam\Debug is registered using regsvr32, and that .dll from other branches are unregistered!
 
+Splitcam does not be to be running to send ultrasound information, however the splitcam driver needs to be setup for the correct filter and not other filters or cameras.
+
+must run the sample.exe file in C:\Users\natal\OneDrive - Universidad de Los Andes\Documents\Ultrasound-STAR\software\SDK\DSCam\UltrasoundRenderer\b_frame_grabber\Debug  to run the ultrasound
