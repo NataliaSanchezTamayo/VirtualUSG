@@ -205,68 +205,68 @@ STDAPI RegisterFilters(BOOL bRegister)
 	return hr;
 }
 
-STDAPI RegisterFiltersv(BOOL bRegister)
-{
-	HRESULT hr = NOERROR;
-	WCHAR achFileName[MAX_PATH];
-	char achTemp[MAX_PATH];
-	ASSERT(g_hInst != 0);
-
-	if (0 == GetModuleFileNameA(g_hInst, achTemp, sizeof(achTemp)))
-		return AmHresultFromWin32(GetLastError());
-
-	MultiByteToWideChar(CP_ACP, 0L, achTemp, lstrlenA(achTemp) + 1,
-		achFileName, NUMELMS(achFileName));
-
-	hr = CoInitialize(0);
-	if (bRegister)
-	{
-		hr = AMovieSetupRegisterServer(CLSID_PushSourceBitmapSender, g_wszPushBitmapSender, achFileName, L"Both", L"InprocServer32");
-	}
-
-	if (SUCCEEDED(hr))
-	{
-		IFilterMapper2 *fm = 0;
-		hr = CreateComObject(CLSID_FilterMapper2, IID_IFilterMapper2, fm);
-		if (SUCCEEDED(hr))
-		{
-			if (bRegister)
-			{
-				IMoniker *pMoniker = 0;
-				REGFILTER2 rf2;
-				rf2.dwVersion = 1;
-				rf2.dwMerit = MERIT_DO_NOT_USE;
-				rf2.cPins = 2;
-				rf2.rgPins = sudOutputPinBitmapSender;
-				hr = fm->RegisterFilter(CLSID_PushSourceBitmapSender, g_wszPushBitmapSender, &pMoniker, &CLSID_VideoInputDeviceCategory, NULL, &rf2);
-			}
-			else
-			{
-				hr = fm->UnregisterFilter(&CLSID_VideoInputDeviceCategory, 0, CLSID_PushSourceBitmapSender);
-			}
-		}
-		// release interface
-		//
-		if (fm)
-			fm->Release();
-	}
-
-	if (SUCCEEDED(hr) && !bRegister)
-		hr = AMovieSetupUnregisterServer(CLSID_PushSourceBitmapSender);
-
-	CoFreeUnusedLibraries();
-	CoUninitialize();
-	return hr;
-}
+//STDAPI RegisterFiltersv(BOOL bRegister)
+//{
+//	HRESULT hr = NOERROR;
+//	WCHAR achFileName[MAX_PATH];
+//	char achTemp[MAX_PATH];
+//	ASSERT(g_hInst != 0);
+//
+//	if (0 == GetModuleFileNameA(g_hInst, achTemp, sizeof(achTemp)))
+//		return AmHresultFromWin32(GetLastError());
+//
+//	MultiByteToWideChar(CP_ACP, 0L, achTemp, lstrlenA(achTemp) + 1,
+//		achFileName, NUMELMS(achFileName));
+//
+//	hr = CoInitialize(0);
+//	if (bRegister)
+//	{
+//		hr = AMovieSetupRegisterServer(CLSID_PushSourceBitmapSender, g_wszPushBitmapSender, achFileName, L"Both", L"InprocServer32");
+//	}
+//
+//	if (SUCCEEDED(hr))
+//	{
+//		IFilterMapper2 *fm = 0;
+//		hr = CreateComObject(CLSID_FilterMapper2, IID_IFilterMapper2, fm);
+//		if (SUCCEEDED(hr))
+//		{
+//			if (bRegister)
+//			{
+//				IMoniker *pMoniker = 0;
+//				REGFILTER2 rf2;
+//				rf2.dwVersion = 1;
+//				rf2.dwMerit = MERIT_DO_NOT_USE;
+//				rf2.cPins = 2;
+//				rf2.rgPins = sudOutputPinBitmapSender;
+//				hr = fm->RegisterFilter(CLSID_PushSourceBitmapSender, g_wszPushBitmapSender, &pMoniker, &CLSID_VideoInputDeviceCategory, NULL, &rf2);
+//			}
+//			else
+//			{
+//				hr = fm->UnregisterFilter(&CLSID_VideoInputDeviceCategory, 0, CLSID_PushSourceBitmapSender);
+//			}
+//		}
+//		// release interface
+//		//
+//		if (fm)
+//			fm->Release();
+//	}
+//
+//	if (SUCCEEDED(hr) && !bRegister)
+//		hr = AMovieSetupUnregisterServer(CLSID_PushSourceBitmapSender);
+//
+//	CoFreeUnusedLibraries();
+//	CoUninitialize();
+//	return hr;
+//}
 
 STDAPI DllRegisterServer()
 {
-	return RegisterFiltersv(TRUE);
+	return RegisterFilters(TRUE);
 }
 
 STDAPI DllUnregisterServer()
 {
-	return RegisterFiltersv(FALSE);
+	return RegisterFilters(FALSE);
 }
 
 extern "C" BOOL WINAPI DllEntryPoint(HINSTANCE, ULONG, LPVOID);

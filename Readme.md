@@ -12,4 +12,7 @@ path to the file is curently in the desktop, must be changed
 camera is not detected with WebRTC test
 
 This code contains two filters vcam and bitmapsender
-this is the  vcamfilter branch
+but only the filter VCAM filter is being registered and unregistered!! 
+this filter does not work with VLC, splitcam or web browsers, however is correctly detected and rendered in team viewer.
+
+
