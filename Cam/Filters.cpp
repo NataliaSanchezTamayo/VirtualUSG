@@ -453,7 +453,7 @@ HRESULT STDMETHODCALLTYPE CVCamStream::GetStreamCaps(int iIndex, AM_MEDIA_TYPE *
 	if (iIndex == 0) iIndex = 4;
 
 	pvi->bmiHeader.biCompression = BI_RGB;
-	pvi->bmiHeader.biBitCount = 24;
+	pvi->bmiHeader.biBitCount = 24;//32 appears to also work:
 	pvi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
 	pvi->bmiHeader.biWidth = 80 * iIndex;
 	pvi->bmiHeader.biHeight = 60 * iIndex;
@@ -465,7 +465,7 @@ HRESULT STDMETHODCALLTYPE CVCamStream::GetStreamCaps(int iIndex, AM_MEDIA_TYPE *
 	SetRectEmpty(&(pvi->rcTarget)); // no particular destination rectangle
 
 	(*pmt)->majortype = MEDIATYPE_Video;
-	(*pmt)->subtype = MEDIASUBTYPE_RGB555;
+	(*pmt)->subtype = MEDIASUBTYPE_RGB555;//MEDIASUBTYPE_RGB32;;
 	(*pmt)->formattype = FORMAT_VideoInfo;
 	(*pmt)->bTemporalCompression = FALSE;
 	(*pmt)->bFixedSizeSamples = FALSE;

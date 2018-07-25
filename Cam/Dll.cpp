@@ -27,6 +27,11 @@
 #include <Mmsystem.h>
 #include <Aviriff.h>
 
+//this dll contains two filters that are being registered independently.
+//for some reason the image register in the original vcam filter is not displayed correctly in all applications
+//push source filter is shown correctly as a filter in splitcam, manycam etc.
+//vcam is shown correctly in teamviewer and as a filter, but in splitcam and vlc shows a blue screen not clear why.
+
 #define CreateComObject(clsid, iid, var) CoCreateInstance( clsid, NULL, CLSCTX_INPROC_SERVER, iid, (void **)&var);
 
 STDAPI AMovieSetupRegisterServer(CLSID   clsServer, LPCWSTR szDescription, LPCWSTR szFileName, LPCWSTR szThreadingModel = L"Both", LPCWSTR szServerType = L"InprocServer32");
@@ -106,7 +111,7 @@ const AMOVIESETUP_FILTER sudPushSourceBitmapSender =
 	&CLSID_PushSourceBitmapSender,// Filter CLSID
 	g_wszPushBitmapSender,        // String name
 	MERIT_DO_NOT_USE,       // Filter merit
-	1,                      // Number pins
+	2,                      // Number pins
 	sudOutputPinBitmapSender     // Pin details
 };
 
@@ -256,12 +261,12 @@ STDAPI RegisterFiltersv(BOOL bRegister)
 
 STDAPI DllRegisterServer()
 {
-	return RegisterFilters(TRUE);
+	return RegisterFiltersv(TRUE);
 }
 
 STDAPI DllUnregisterServer()
 {
-	return RegisterFilters(FALSE);
+	return RegisterFiltersv(FALSE);
 }
 
 extern "C" BOOL WINAPI DllEntryPoint(HINSTANCE, ULONG, LPVOID);
