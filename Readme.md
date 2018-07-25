@@ -12,4 +12,4 @@ path to the file is curently in the desktop, must be changed
 camera is not detected with WebRTC test
 
 This code contains two filters vcam and bitmapsender
-what happens
+this is the  vcamfilter branch
