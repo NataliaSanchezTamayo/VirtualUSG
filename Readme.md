@@ -15,4 +15,6 @@ This code contains two filters vcam and bitmapsender
 but only the filter VCAM filter is being registered and unregistered!! 
 this filter does not work with VLC, splitcam or web browsers, however is correctly detected and rendered in team viewer.
 
+-When using this filter VCAM for team viewer you must make sure that the .dll located in the folder: \Cam\Debug
+is registered using regsvr32, and that .dll from other branches are unregistered!
 
