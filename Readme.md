@@ -16,5 +16,6 @@ This code contains two filters vcam and bitmapsender
 However, Only the filter bitmap sender is being registered and unregistered!!
 the filter works correctly with splitcam and directshow applications but is not detected as hardware in the computer. So it requires the use of splitcam driver for the web browser to find it as a camera. driver is not setup correctly for team viewer.
 
-
+##Register
+-When using this filter bitmapsender with splitcam you must make sure that the .dll located in the folder: \Cam\Debug is registered using regsvr32, and that .dll from other branches are unregistered!
 
