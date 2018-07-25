@@ -27,7 +27,7 @@
 #include <Mmsystem.h>
 #include <Aviriff.h>
 
-//this dll contains two filters that are being registered independently.
+//this dll contains two filters only bitmap sender is being registered
 //for some reason the image register in the original vcam filter is not displayed correctly in all applications
 //push source filter is shown correctly as a filter in splitcam, manycam etc.
 //vcam is shown correctly in teamviewer and as a filter, but in splitcam and vlc shows a blue screen not clear why.
@@ -151,61 +151,61 @@ CFactoryTemplate g_Templates[2] =
 
 int g_cTemplates = sizeof(g_Templates) / sizeof(g_Templates[0]);
 
-STDAPI RegisterFilters(BOOL bRegister)
-{
-	HRESULT hr = NOERROR;
-	WCHAR achFileName[MAX_PATH];
-	char achTemp[MAX_PATH];
-	ASSERT(g_hInst != 0);
+//STDAPI RegisterFilters(BOOL bRegister)
+//{
+//	HRESULT hr = NOERROR;
+//	WCHAR achFileName[MAX_PATH];
+//	char achTemp[MAX_PATH];
+//	ASSERT(g_hInst != 0);
+//
+//	if (0 == GetModuleFileNameA(g_hInst, achTemp, sizeof(achTemp)))
+//		return AmHresultFromWin32(GetLastError());
+//
+//	MultiByteToWideChar(CP_ACP, 0L, achTemp, lstrlenA(achTemp) + 1,
+//		achFileName, NUMELMS(achFileName));
+//
+//	hr = CoInitialize(0);
+//	if (bRegister)
+//	{
+//		hr = AMovieSetupRegisterServer(CLSID_VirtualCam, L"Virtual Cam", achFileName, L"Both", L"InprocServer32");
+//	}
+//
+//	if (SUCCEEDED(hr))
+//	{
+//		IFilterMapper2 *fm = 0;
+//		hr = CreateComObject(CLSID_FilterMapper2, IID_IFilterMapper2, fm);
+//		if (SUCCEEDED(hr))
+//		{
+//			if (bRegister)
+//			{
+//				IMoniker *pMoniker = 0;
+//				REGFILTER2 rf2;
+//				rf2.dwVersion = 1;
+//				rf2.dwMerit = MERIT_DO_NOT_USE;
+//				rf2.cPins = 2;
+//				rf2.rgPins = AMSPinVCam;
+//				hr = fm->RegisterFilter(CLSID_VirtualCam, L"Virtual Cam", &pMoniker, &CLSID_VideoInputDeviceCategory, NULL, &rf2);
+//			}
+//			else
+//			{
+//				hr = fm->UnregisterFilter(&CLSID_VideoInputDeviceCategory, 0, CLSID_VirtualCam);
+//			}
+//		}
+//		// release interface
+//		//
+//		if (fm)
+//			fm->Release();
+//	}
+//
+//	if (SUCCEEDED(hr) && !bRegister)
+//		hr = AMovieSetupUnregisterServer(CLSID_VirtualCam);
+//
+//	CoFreeUnusedLibraries();
+//	CoUninitialize();
+//	return hr;
+//}
 
-	if (0 == GetModuleFileNameA(g_hInst, achTemp, sizeof(achTemp)))
-		return AmHresultFromWin32(GetLastError());
-
-	MultiByteToWideChar(CP_ACP, 0L, achTemp, lstrlenA(achTemp) + 1,
-		achFileName, NUMELMS(achFileName));
-
-	hr = CoInitialize(0);
-	if (bRegister)
-	{
-		hr = AMovieSetupRegisterServer(CLSID_VirtualCam, L"Virtual Cam", achFileName, L"Both", L"InprocServer32");
-	}
-
-	if (SUCCEEDED(hr))
-	{
-		IFilterMapper2 *fm = 0;
-		hr = CreateComObject(CLSID_FilterMapper2, IID_IFilterMapper2, fm);
-		if (SUCCEEDED(hr))
-		{
-			if (bRegister)
-			{
-				IMoniker *pMoniker = 0;
-				REGFILTER2 rf2;
-				rf2.dwVersion = 1;
-				rf2.dwMerit = MERIT_DO_NOT_USE;
-				rf2.cPins = 2;
-				rf2.rgPins = AMSPinVCam;
-				hr = fm->RegisterFilter(CLSID_VirtualCam, L"Virtual Cam", &pMoniker, &CLSID_VideoInputDeviceCategory, NULL, &rf2);
-			}
-			else
-			{
-				hr = fm->UnregisterFilter(&CLSID_VideoInputDeviceCategory, 0, CLSID_VirtualCam);
-			}
-		}
-		// release interface
-		//
-		if (fm)
-			fm->Release();
-	}
-
-	if (SUCCEEDED(hr) && !bRegister)
-		hr = AMovieSetupUnregisterServer(CLSID_VirtualCam);
-
-	CoFreeUnusedLibraries();
-	CoUninitialize();
-	return hr;
-}
-
-STDAPI RegisterFiltersv(BOOL bRegister)
+STDAPI RegisterFiltersBit(BOOL bRegister)
 {
 	HRESULT hr = NOERROR;
 	WCHAR achFileName[MAX_PATH];
@@ -261,12 +261,12 @@ STDAPI RegisterFiltersv(BOOL bRegister)
 
 STDAPI DllRegisterServer()
 {
-	return RegisterFiltersv(TRUE);
+	return RegisterFiltersBit(TRUE);
 }
 
 STDAPI DllUnregisterServer()
 {
-	return RegisterFiltersv(FALSE);
+	return RegisterFiltersBit(FALSE);
 }
 
 extern "C" BOOL WINAPI DllEntryPoint(HINSTANCE, ULONG, LPVOID);
