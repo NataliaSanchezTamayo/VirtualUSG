@@ -6,7 +6,6 @@ VirtualUSG is a Directshow filter named Virtual Cam that reads an bitmap (32 bit
 The Direct Show filter creates the library **Cam.dll** that must be registered using regsvr32, the file is located in the Debug (release) folder. The bitmap filed accessed is called Bitmap1.bmp  
 Once registered the filter is always accessible as a web camera device, the bitmap is updated when the application b_frame_grabber under the project (Folder) DSCam.
 
-
 at this point image in the team viewer display appears to be mirrored
 path to the file is curently in the desktop, must be changed
 camera is not detected with WebRTC test
@@ -18,6 +17,9 @@ the filter works correctly with splitcam and directshow applications but is not 
 
 ## Register
 -When using this filter bitmapsender with splitcam you must make sure that the .dll located in the folder: \Cam\Debug is registered using regsvr32, and that .dll from other branches are unregistered!
+
+open Command prompt as administrator, go to the folder \Cam\Debug and run
+regsvr32 Cam.dll
 
 ## To run application
 Splitcam does not be to be running to send ultrasound information, however the splitcam driver needs to be setup for the correct filter and not other filters or cameras.
